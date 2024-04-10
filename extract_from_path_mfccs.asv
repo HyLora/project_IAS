@@ -1,0 +1,35 @@
+function [features1, features2, features3, time1, time2, time3] = extract_from_path_mfccs(path1,path2,path3,extension,windowLength,stepLength)
+files1 = dir([path1,'*.',extension]);
+files2 = dir([path2,'*.',extension]);
+files3 = dir([path3,'*.',extension]);
+features1=[];
+E1=[];
+Z1=[];
+for i=1:length(files1)
+    ceps = extractMFCCs(files1(i).name,windowLength,stepLength);
+    features1 = [features1 ceps];
+    [E,Z] = time_domain_features(files1(i).name,windowLength,stepLength);  
+    E1 = [E1 E];
+    Z1 = [Z1 Z];
+end
+time1 = [E1 Z1];
+features2=[];
+E1=[];
+Z1=[];
+for i=1:length(files2)
+    ceps = extractMFCCs(files2(i).name,windowLength,stepLength);
+    features2 = [features2 ceps];
+    [E,Z] = time_domain_features(files2(i).name,windowLength,stepLength);  
+    E2 = [E1 E];
+    Z2 = [Z1 Z];
+end
+features3=[];
+E1=[];
+Z1=[];
+for i=1:length(files3)
+    ceps = extractMFCCs(files3(i).name,windowLength,stepLength);
+    features3 = [features3 ceps];
+    [E,Z] = time_domain_features(files1(i).name,windowLength,stepLength);  
+    E3 = [E1 E];
+    Z3 = [Z1 Z];
+end
